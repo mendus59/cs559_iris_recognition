@@ -3,18 +3,18 @@ import matplotlib as plt
 import cv2
 
 import create_iris_codes as cic
-import load_probe_script as lss
-import load_gallery_script as lts
+import load_probe_script as lps
+import load_gallery_script as lgs
 import iris_recognition as ir
 import stats_runner as sr
 
 # Run script to load gallery
 iris_gallery = []
-iris_gallery = lts.load_gallery_script()
+iris_gallery = lgs.load_gallery_script()
 
 # Run script to load probes
 iris_probes = []
-iris_probes = lss.load_probe_script()
+iris_probes = lps.load_probe_script()
 
 # Create iris codes
 for template in iris_gallery:
