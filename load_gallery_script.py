@@ -1,3 +1,5 @@
 
 def load_gallery_script():
-    return []
+    print ('It Works')
+
+load_gallery_script()
