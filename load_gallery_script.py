@@ -1,5 +1,15 @@
 
+import hash_builder
+
 def load_gallery_script():
-    print ('It Works')
+
+   arr =[]
+   hash_builder.build("gallery\\", arr)
+   print(len(arr))
+   print(arr)
+   return arr
+
 
 load_gallery_script()
+
+
