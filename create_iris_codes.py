@@ -3,15 +3,13 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 def create_iris_codes(template_hash, test_mode=False):
-
-    img = template_hash['image']
+    img = cv2.imread(template_hash['image'], cv2.IMREAD_GRAYSCALE)
     rimg = resize_image(img)
     edge_image = canny_edge(rimg)
     circles = hough_transform(edge_image)
     cropped_iris = crop_iris(rimg, circles['iris'])
     iris_map = map_to_rectangle(cropped_iris, circles['iris'])
     thresh = threshold(iris_map)
-
     template_hash['iris_code'] = thresh
 
     if test_mode:
@@ -30,10 +28,20 @@ def canny_edge(image):
 
 def hough_transform(image):
     img = image
-
-    iris = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 13, 250,
-                                param1=50, param2=50, minRadius=10, maxRadius=150)
-    circles = { 'iris': iris[0][0] }
+    i = 80
+    iris = []
+    while i < 151:
+    #iris = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 13, 250,
+    #                            param1=50, param2=50, minRadius=10, maxRadius=150)
+        iris_candidate = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 2, 100,
+                            param1=30, param2=i, minRadius=100, maxRadius=150)
+        if iris_candidate is not None:
+            if len(iris_candidate) == 1:
+                iris = list(iris_candidate.flat)
+                break
+        iris = [200, 150, 100]
+        i += 1
+    circles = { 'iris': iris }
     return circles
 
 def crop_iris(image, iris_circle):

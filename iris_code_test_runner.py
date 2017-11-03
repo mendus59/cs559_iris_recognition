@@ -1,6 +1,5 @@
 import numpy as np
 import cv2
-
 import create_iris_codes as cic
 
 img1 = cv2.imread('test/test_iris1.tiff', cv2.IMREAD_GRAYSCALE)
