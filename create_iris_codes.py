@@ -33,10 +33,7 @@ def hough_transform(image):
 
     iris = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, 13, 250,
                                 param1=50, param2=50, minRadius=10, maxRadius=150)
-    pupil = cv2.HoughCircles(img, cv2.HOUGH_GRADIENT, .9, 200,
-                                param1=50, param2=50, minRadius=10, maxRadius=150)
-    
-    circles = { 'iris': iris[0][0], 'pupil':pupil[0][0] }
+    circles = { 'iris': iris[0][0] }
     return circles
 
 def crop_iris(image, iris_circle):
@@ -74,8 +71,6 @@ def test_display(img, rimg, edge_image, circles, cropped_iris, iris_map, thresh)
     cimg = cv2.cvtColor(rimg,cv2.COLOR_GRAY2BGR)
     icircles = np.uint16(np.around(circles['iris']))
     cv2.circle(cimg,(icircles[0],icircles[1]),icircles[2],(0,255,0),2)
-    pcircles = np.uint16(np.around(circles['pupil']))
-    cv2.circle(cimg,(pcircles[0],pcircles[1]),pcircles[2],(0,255,0),2)
     cv2.imshow('detected circles',cimg)
     cv2.waitKey(0)
     cv2.destroyWindow('detected circles')
